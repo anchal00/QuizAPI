@@ -115,11 +115,12 @@ public class QnAserviceImpl implements QnAservice {
         for (Map.Entry<String, Boolean> e : results.entrySet()) {
 
             SubmitQuestionResponseDto dto = new SubmitQuestionResponseDto();
-            dto.setAnswerIsCorrect(e.getValue());
+            dto.setAnswerCorrect(e.getValue());
             dto.setCorrect(qentityMap.get(e.getKey()).getCorrectAnswer());
             dto.setOptions(qentityMap.get(e.getKey()).getOptions());
             dto.setTitle(qentityMap.get(e.getKey()).getTitle());
             dto.setExplanation(null);
+            dto.setDescription(qentityMap.get(e.getKey()).getDescription());
             dto.setQuestionId(e.getKey());
             dto.setUserAnswer(givenAnswers.get(e.getKey()));
             dto.setType(qentityMap.get(e.getKey()).getType());

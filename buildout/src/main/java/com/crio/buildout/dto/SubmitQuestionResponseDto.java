@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 public class SubmitQuestionResponseDto {
     private String questionId;
     private String title;
+    private String description;
     private String type;
     private Map<String, String> options;
     private List<String> userAnswer;
     private List<String> correct;
     private String explanation;
-    private boolean answerIsCorrect;
+    private boolean answerCorrect;
 }

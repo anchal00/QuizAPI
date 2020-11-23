@@ -141,8 +141,8 @@ public class QnAservicetest {
         SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(request, "1");
 
         assertNotNull(response);
-        assertFalse(response.getQuestions().get(0).isAnswerIsCorrect());
-        assertTrue(response.getQuestions().get(1).isAnswerIsCorrect());
+        assertFalse(response.getQuestions().get(0).isAnswerCorrect());
+        assertTrue(response.getQuestions().get(1).isAnswerCorrect());
 
     }
 
@@ -156,8 +156,8 @@ public class QnAservicetest {
         SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(request, "1");
 
         assertNotNull(response);
-        assertFalse(response.getQuestions().get(0).isAnswerIsCorrect());
-        assertFalse(response.getQuestions().get(1).isAnswerIsCorrect());
+        assertFalse(response.getQuestions().get(0).isAnswerCorrect());
+        assertFalse(response.getQuestions().get(1).isAnswerCorrect());
 
     }
 
