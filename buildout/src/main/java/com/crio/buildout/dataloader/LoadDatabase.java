@@ -13,23 +13,22 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoadDatabase implements CommandLineRunner{
+public class LoadDatabase implements CommandLineRunner {
 
-    @Autowired
-    QnARepositoryService qnaRepositoryService;
+  @Autowired
+  QnARepositoryService qnaRepositoryService;
     
-    @Override
-    public void run(String... args) throws Exception {
-        File file = new File("/home/anchal/workspace/anchal82199-ME_BUILDOUT_QA/initial_data_load.json");
-        
-        List<QuestionEntity> list = new ObjectMapper().readValue(file, new TypeReference<List<QuestionEntity>>(){});
-
-        for (QuestionEntity each : list) {
-            each.setModuleId("1");
-        }
-        qnaRepositoryService.clearDb();
-        qnaRepositoryService.populateDatabase(list);
-        System.out.println("Populated the Db");
+  @Override
+  public void run(String... args) throws Exception {
+    File file = new File("/home/anchal/workspace/"
+        + "anchal82199-ME_BUILDOUT_QA/initial_data_load.json");        
+    List<QuestionEntity> list = new ObjectMapper().readValue(file, 
+        new TypeReference<List<QuestionEntity>>(){});
+    for (QuestionEntity each : list) {
+      each.setModuleId("1");
     }
-    
+    qnaRepositoryService.clearDb();
+    qnaRepositoryService.populateDatabase(list);
+    System.out.println("Populated the Db");
+  }  
 }

@@ -34,7 +34,7 @@ public class BuildoutController {
 
     GetQuestionResponse obj = qnAservice.getQuestionSet(moduleId);
     if (obj.getQuestions().size() == 0) {
-        return new ResponseEntity<GetQuestionResponse>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<GetQuestionResponse>(HttpStatus.NOT_FOUND);
     }
     return new ResponseEntity<GetQuestionResponse>(obj, HttpStatus.OK);
   }
@@ -49,18 +49,19 @@ public class BuildoutController {
     }
     SubmitQuestionRequest submittedDataByUser = null;
     try {
-        submittedDataByUser = new ObjectMapper().readValue(requestContent,
+      submittedDataByUser = new ObjectMapper().readValue(requestContent,
             SubmitQuestionRequest.class);            
     } catch (Exception e) {
-        return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
     }
         
-    SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(submittedDataByUser, moduleId);
-    if(response == null) {
-        return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
+    SubmitQuestionResponse response = qnAservice
+        .checkSubmittedAnswers(submittedDataByUser, moduleId);
+    if (response == null) {
+      return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
     }
     if (response.getQuestions().size() == 0) {
-        return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.NOT_FOUND);
     }    
     return new ResponseEntity<SubmitQuestionResponse>(response, HttpStatus.OK);     
   }     
