@@ -164,6 +164,6 @@ public class QnAservicetest {
     @Test
     public void invalidModuleReturnsEmptyResponse() {
 
-        assertNull(qnAservice.getQuestionSet(" "));
+        assertTrue(qnAservice.getQuestionSet("test").getQuestions().isEmpty());
   }
 }
