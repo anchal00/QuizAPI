@@ -31,9 +31,9 @@ public class QnARepositoryServiceimpl implements QnARepositoryService {
     if (moduleId.isEmpty()) {
       return questionList;
     }
-    List<QuestionEntity> qEntityList = questionrepo.findAllByModuleId(moduleId);
+    List<QuestionEntity> qentityList = questionrepo.findAllByModuleId(moduleId);
     mapper = new ModelMapper();
-    for (QuestionEntity entity : qEntityList) {
+    for (QuestionEntity entity : qentityList) {
       questionList.add(mapper.map(entity, Question.class));
     }
     return questionList;
@@ -42,9 +42,9 @@ public class QnARepositoryServiceimpl implements QnARepositoryService {
   @Override
   public Map<String, QuestionEntity> getAllEntitiesMap(String moduleId) {
         
-    List<QuestionEntity> qEntityList = questionrepo.findAllByModuleId(moduleId);
+    List<QuestionEntity> qentityList = questionrepo.findAllByModuleId(moduleId);
     Map<String, QuestionEntity> ansMap = new HashMap<>();
-    for (QuestionEntity entity : qEntityList) {        
+    for (QuestionEntity entity : qentityList) {        
       ansMap.put(entity.getQuestionId(), entity);      
     }
     return  ansMap;

@@ -39,7 +39,7 @@ public class QnAserviceImpl implements QnAservice {
   }
 
   public boolean validateAnswers(List<String> submitList, 
-    List<String> actualAnswers) {
+      List<String> actualAnswers) {
     if (submitList == null || submitList.size() == 0) {
       return false;
     }
@@ -51,15 +51,16 @@ public class QnAserviceImpl implements QnAservice {
       answers.add(each);
     }
     for (String each : submitList) {
-        if (!answers.contains(each)) {
-            return false;
-        }
+      if (!answers.contains(each)) {
+        return false;
+      }
     }
     return true;
   }
 
   @Override
-  public SubmitQuestionResponse checkSubmittedAnswers(SubmitQuestionRequest data, String module) {        
+  public SubmitQuestionResponse checkSubmittedAnswers(
+      SubmitQuestionRequest data, String module) {        
     
     SubmitQuestionResponse response = new SubmitQuestionResponse();
     List<SubmitQuestionRequestDto> list = data.getResponses();
@@ -74,7 +75,7 @@ public class QnAserviceImpl implements QnAservice {
     int score = 0;
     int total = totalQuestions;
 
-    if (list != null && list.size() > 0 ) {
+    if (list != null && list.size() > 0) {
       for (SubmitQuestionRequestDto each : list) {  
         List<String> allAnswers = qentityMap.get(each.getQuestionId()).getCorrectAnswer();
         List<String> submittedAnswers = each.getUserResponse();
@@ -86,12 +87,12 @@ public class QnAserviceImpl implements QnAservice {
         givenAnswers.put(each.getQuestionId(), submittedAnswers);
         results.put(each.getQuestionId(), isCorrect);
         ++attempted;
-        }
+      }
     } 
     //unattempted questions are evaluated to False by default
-    while (attempted != totalQuestions){
-    results.put(qentitylist.get(attempted).getQuestionId(), false);
-    ++attempted;
+    while (attempted != totalQuestions) {
+      results.put(qentitylist.get(attempted).getQuestionId(), false);
+      ++attempted;
     }
     List<SubmitQuestionResponseDto> listOfEvaluatedResponses = makeResponseDtoList(results,
         qentityMap, givenAnswers);
