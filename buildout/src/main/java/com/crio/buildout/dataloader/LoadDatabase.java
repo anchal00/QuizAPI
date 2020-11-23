@@ -20,8 +20,7 @@ public class LoadDatabase implements CommandLineRunner {
     
   @Override
   public void run(String... args) throws Exception {
-    File file = new File("/home/anchal/workspace/"
-        + "anchal82199-ME_BUILDOUT_QA/initial_data_load.json");        
+    File file = new File(System.getProperty("user.dir") + "/../initial_data_load.json");        
     List<QuestionEntity> list = new ObjectMapper().readValue(file, 
         new TypeReference<List<QuestionEntity>>(){});
     for (QuestionEntity each : list) {

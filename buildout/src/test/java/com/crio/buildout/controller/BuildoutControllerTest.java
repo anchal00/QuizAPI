@@ -82,7 +82,7 @@ public class BuildoutControllerTest {
     }      
 
     public GetQuestionResponse loadQuestions() throws Exception {
-        File file = new File("/home/anchal/workspace/anchal82199-ME_BUILDOUT_QA/initial_data_load.json");
+        File file = new File(System.getProperty("user.dir") + "/../initial_data_load.json");
 
         List<Question> list = mapper.readValue(file, new TypeReference<List<Question>>(){});
 
