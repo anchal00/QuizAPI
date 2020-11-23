@@ -22,49 +22,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/quiz")
 public class BuildoutController {
 
-    @Autowired
-    QnAservice qnAservice;
+  @Autowired
+  QnAservice qnAservice;
 
-    @Autowired
-    QnArepository repo;
+  @Autowired
+  QnArepository repo;
 
-    @RequestMapping(value = "/{moduleId}", method = RequestMethod.GET)
-    public ResponseEntity<GetQuestionResponse> getQuestions(@PathVariable String moduleId, HttpServletRequest request) {
+  @RequestMapping(value = "/{moduleId}", method = RequestMethod.GET)
+  public ResponseEntity<GetQuestionResponse> getQuestions(
+        @PathVariable String moduleId, HttpServletRequest request) {
 
-        GetQuestionResponse obj = qnAservice.getQuestionSet(moduleId);
-        if (obj.getQuestions().size() == 0) {
-            return new ResponseEntity<GetQuestionResponse>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<GetQuestionResponse>(obj, HttpStatus.OK);
+    GetQuestionResponse obj = qnAservice.getQuestionSet(moduleId);
+    if (obj.getQuestions().size() == 0) {
+        return new ResponseEntity<GetQuestionResponse>(HttpStatus.NOT_FOUND);
     }
+    return new ResponseEntity<GetQuestionResponse>(obj, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/{moduleId}", method = RequestMethod.POST)
-    public ResponseEntity<SubmitQuestionResponse> submitAnswers(@PathVariable String moduleId,
-            @RequestBody String requestContent) {
+  @RequestMapping(value = "/{moduleId}", method = RequestMethod.POST)
+  public ResponseEntity<SubmitQuestionResponse> submitAnswers(
+        @PathVariable String moduleId,
+        @RequestBody String requestContent) {
 
-        if (requestContent == null) {
-            return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
-        }
-        SubmitQuestionRequest submittedDataByUser = null;
-        try {
-            submittedDataByUser = new ObjectMapper().readValue(requestContent,
-                SubmitQuestionRequest.class);
-            
-        } catch (Exception e) {
-            return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
-        }
-        
-        SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(submittedDataByUser, moduleId);
-
-        if(response == null) {
-            return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
-        }
-        if (response.getQuestions().size() == 0) {
-            return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.NOT_FOUND);
-        }
-        
-        return new ResponseEntity<SubmitQuestionResponse>(response, HttpStatus.OK);
-        
+    if (requestContent == null) {
+      return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
     }
-       
+    SubmitQuestionRequest submittedDataByUser = null;
+    try {
+        submittedDataByUser = new ObjectMapper().readValue(requestContent,
+            SubmitQuestionRequest.class);            
+    } catch (Exception e) {
+        return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
+    }
+        
+    SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(submittedDataByUser, moduleId);
+    if(response == null) {
+        return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
+    }
+    if (response.getQuestions().size() == 0) {
+        return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.NOT_FOUND);
+    }    
+    return new ResponseEntity<SubmitQuestionResponse>(response, HttpStatus.OK);     
+  }     
 }
