@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 public class QuestionTest {
     
-    private final String json = 
+    String json = 
         "{\"questionId\":\"001\",\"title\":\"What is the default IP address of localhost?\","
         +"\"description\":\"General question\",\"type\":\"objective-single\","
         + "\"options\":{\"1\":\"0.0.0.0\",\"2\":\"192.168.0.12\",\"3\":\"127.0.0.1\","
@@ -20,7 +20,7 @@ public class QuestionTest {
         + "\"correctAnswer\":"
         + "[\"4\"]"
         + "}";
-    private final String questionFormat = 
+    String questionFormat = 
         "{\"questionId\":\"001\",\"title\":\"What is the default IP address of localhost?\","
         +"\"type\":\"objective-single\","
         + "\"options\":{\"1\":\"0.0.0.0\",\"2\":\"192.168.0.12\",\"3\":\"127.0.0.1\","
