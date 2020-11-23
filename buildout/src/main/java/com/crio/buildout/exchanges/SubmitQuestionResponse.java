@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.crio.buildout.dto.Question;
 import com.crio.buildout.dto.SubmitQuestionResponseDto;
+import com.crio.buildout.dto.Summary;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubmitQuestionResponse {
-    private List<SubmitQuestionResponseDto> responsedto = new ArrayList<>();
+    private List<SubmitQuestionResponseDto> questions = new ArrayList<>();
+    private Summary summary;
 }

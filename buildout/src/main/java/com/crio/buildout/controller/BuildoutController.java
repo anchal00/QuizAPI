@@ -65,7 +65,7 @@ public class BuildoutController {
         if(response == null) {
             return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.BAD_REQUEST);
         }
-        if (response.getResponsedto().size() == 0) {
+        if (response.getQuestions().size() == 0) {
             return new ResponseEntity<SubmitQuestionResponse>(HttpStatus.NOT_FOUND);
         }
         

@@ -173,14 +173,14 @@ public class BuildoutControllerTest {
                 add("dummyAnswer");
             }
         });
-        test.setSubmittedList(List.of(dto));
+        test.setResponses(List.of(dto));
 
         String content = new ObjectMapper().writeValueAsString(test);
 
         SubmitQuestionResponseDto response = new SubmitQuestionResponseDto();
 
         var obj = new SubmitQuestionResponse();
-        obj.setResponsedto(List.of(response));
+        obj.setQuestions(List.of(response));
 
         when(qnAservice.checkSubmittedAnswers(test, "1"))
             .thenReturn(obj);

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubmitQuestionRequest {
-    private List<SubmitQuestionRequestDto> submittedList;
+    private List<SubmitQuestionRequestDto> responses;
 }

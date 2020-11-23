@@ -11,6 +11,7 @@ import java.util.Set;
 import com.crio.buildout.dto.Question;
 import com.crio.buildout.dto.SubmitQuestionRequestDto;
 import com.crio.buildout.dto.SubmitQuestionResponseDto;
+import com.crio.buildout.dto.Summary;
 import com.crio.buildout.exchanges.GetQuestionResponse;
 import com.crio.buildout.exchanges.SubmitQuestionRequest;
 import com.crio.buildout.exchanges.SubmitQuestionResponse;
@@ -64,7 +65,7 @@ public class QnAserviceImpl implements QnAservice {
         
         SubmitQuestionResponse response = new SubmitQuestionResponse();
 
-        List<SubmitQuestionRequestDto> list = data.getSubmittedList();
+        List<SubmitQuestionRequestDto> list = data.getResponses();
 
         Map<String, QuestionEntity> qentityMap = qnaRepository.getAllEntitiesMap(module);
         ArrayList<QuestionEntity> qentitylist = new ArrayList<>(qentityMap.values());
@@ -74,6 +75,8 @@ public class QnAserviceImpl implements QnAservice {
 
         int totalQuestions = qentityMap.size();
         int attempted = 0;
+        int score = 0;
+        int total = totalQuestions;
 
         if (list != null && list.size() > 0 ) {
             for (SubmitQuestionRequestDto each : list) {
@@ -82,7 +85,10 @@ public class QnAserviceImpl implements QnAservice {
                 List<String> submittedAnswers = each.getUserResponse();
                 
                 boolean isCorrect = validateAnswers(submittedAnswers, allAnswers);
-    
+                
+                if (isCorrect) {
+                    score++;
+                }
                 givenAnswers.put(each.getQuestionId(), submittedAnswers);
                 results.put(each.getQuestionId(), isCorrect);
                 ++attempted;
@@ -95,8 +101,10 @@ public class QnAserviceImpl implements QnAservice {
         }
         List<SubmitQuestionResponseDto> listOfEvaluatedResponses = makeResponseDtoList(results,
             qentityMap, givenAnswers);
-        
-        response.setResponsedto(listOfEvaluatedResponses);
+
+        Summary summary = new Summary(score, total);
+        response.setQuestions(listOfEvaluatedResponses);
+        response.setSummary(summary);
         return response;
     }    
 

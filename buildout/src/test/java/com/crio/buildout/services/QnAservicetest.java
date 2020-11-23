@@ -115,7 +115,7 @@ public class QnAservicetest {
         SubmitQuestionRequest request = new SubmitQuestionRequest();
         SubmitQuestionRequestDto dto1 = new SubmitQuestionRequestDto("001", List.of("1"));
         
-        request.setSubmittedList(List.of(dto1));
+        request.setResponses(List.of(dto1));
 
         Map<String, QuestionEntity> map = getAllEntitiesMap();
 
@@ -133,7 +133,7 @@ public class QnAservicetest {
         SubmitQuestionRequestDto dto2 = new SubmitQuestionRequestDto("002", List.of("3"));
         
 
-        request.setSubmittedList(List.of(dto1, dto2));
+        request.setResponses(List.of(dto1, dto2));
 
         Map<String, QuestionEntity> map = getAllEntitiesMap();
 
@@ -141,8 +141,8 @@ public class QnAservicetest {
         SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(request, "1");
 
         assertNotNull(response);
-        assertFalse(response.getResponsedto().get(0).isAnswerIsCorrect());
-        assertTrue(response.getResponsedto().get(1).isAnswerIsCorrect());
+        assertFalse(response.getQuestions().get(0).isAnswerIsCorrect());
+        assertTrue(response.getQuestions().get(1).isAnswerIsCorrect());
 
     }
 
@@ -156,8 +156,8 @@ public class QnAservicetest {
         SubmitQuestionResponse response = qnAservice.checkSubmittedAnswers(request, "1");
 
         assertNotNull(response);
-        assertFalse(response.getResponsedto().get(0).isAnswerIsCorrect());
-        assertFalse(response.getResponsedto().get(1).isAnswerIsCorrect());
+        assertFalse(response.getQuestions().get(0).isAnswerIsCorrect());
+        assertFalse(response.getQuestions().get(1).isAnswerIsCorrect());
 
     }
 
