@@ -75,10 +75,32 @@ public class BuildoutControllerTest {
     private static SubmitQuestionRequestDto response4;
     
     void loadResponses() {
-        response1 = new SubmitQuestionRequestDto("001", List.of("4"));
-        response2 = new SubmitQuestionRequestDto("002", List.of("1", "3", "4"));
-        response3 = new SubmitQuestionRequestDto("003", List.of("throwable"));
-        response4 = new SubmitQuestionRequestDto("003", List.of("throw"));
+        ArrayList<String> list1 = new ArrayList<>(){
+            {
+                add("4");
+            }
+        };
+        ArrayList<String> list2 = new ArrayList<>(){
+            {
+                add("1");
+                add("3");
+                add("4");
+            }
+        };
+        ArrayList<String> list3 = new ArrayList<>(){
+            {
+                add("throwable");
+            }
+        };
+        ArrayList<String> list4 = new ArrayList<>(){
+            {
+                add("throw");
+            }
+        };
+        response1 = new SubmitQuestionRequestDto("001", list1);
+        response2 = new SubmitQuestionRequestDto("002", list2);
+        response3 = new SubmitQuestionRequestDto("003", list3);
+        response4 = new SubmitQuestionRequestDto("003", list4);
     }      
 
     public GetQuestionResponse loadQuestions() throws Exception {
@@ -180,7 +202,11 @@ public class BuildoutControllerTest {
         SubmitQuestionResponseDto response = new SubmitQuestionResponseDto();
 
         var obj = new SubmitQuestionResponse();
-        obj.setQuestions(List.of(response));
+        obj.setQuestions(new ArrayList<SubmitQuestionResponseDto>(){
+            {
+                add(response);
+            }
+        });
 
         when(qnAservice.checkSubmittedAnswers(test, "1"))
             .thenReturn(obj);

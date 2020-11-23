@@ -115,7 +115,11 @@ public class QnAservicetest {
         SubmitQuestionRequest request = new SubmitQuestionRequest();
         SubmitQuestionRequestDto dto1 = new SubmitQuestionRequestDto("001", List.of("1"));
         
-        request.setResponses(List.of(dto1));
+        request.setResponses(new ArrayList<SubmitQuestionRequestDto>(){
+            {
+                add(dto1);
+            }
+        });
 
         Map<String, QuestionEntity> map = getAllEntitiesMap();
 
@@ -129,11 +133,16 @@ public class QnAservicetest {
     public void answersSubmittedAreValidatedCorrectly() {
         SubmitQuestionRequest request = new SubmitQuestionRequest();
 
-        SubmitQuestionRequestDto dto1 = new SubmitQuestionRequestDto("001", List.of("1"));
-        SubmitQuestionRequestDto dto2 = new SubmitQuestionRequestDto("002", List.of("3"));
+        SubmitQuestionRequestDto dto1 = new SubmitQuestionRequestDto("001", new ArrayList<String>(){{add("1");}});
+        SubmitQuestionRequestDto dto2 = new SubmitQuestionRequestDto("002", new ArrayList<String>(){{add("3");}});
         
 
-        request.setResponses(List.of(dto1, dto2));
+        request.setResponses(new ArrayList<SubmitQuestionRequestDto>(){
+            {
+                add(dto1);
+                add(dto2);
+            }
+        });
 
         Map<String, QuestionEntity> map = getAllEntitiesMap();
 
