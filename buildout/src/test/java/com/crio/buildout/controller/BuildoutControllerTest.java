@@ -75,24 +75,24 @@ public class BuildoutControllerTest {
     private static SubmitQuestionRequestDto response4;
     
     void loadResponses() {
-        ArrayList<String> list1 = new ArrayList<>(){
+        ArrayList<String> list1 = new ArrayList<String>(){
             {
                 add("4");
             }
         };
-        ArrayList<String> list2 = new ArrayList<>(){
+        ArrayList<String> list2 = new ArrayList<String>(){
             {
                 add("1");
                 add("3");
                 add("4");
             }
         };
-        ArrayList<String> list3 = new ArrayList<>(){
+        ArrayList<String> list3 = new ArrayList<String>(){
             {
                 add("throwable");
             }
         };
-        ArrayList<String> list4 = new ArrayList<>(){
+        ArrayList<String> list4 = new ArrayList<String>(){
             {
                 add("throw");
             }
@@ -108,7 +108,7 @@ public class BuildoutControllerTest {
 
         List<Question> list = mapper.readValue(file, new TypeReference<List<Question>>(){});
 
-        var response = new GetQuestionResponse();
+        GetQuestionResponse response = new GetQuestionResponse();
         response.setQuestions(list);
         return response;
     }
@@ -195,13 +195,17 @@ public class BuildoutControllerTest {
                 add("dummyAnswer");
             }
         });
-        test.setResponses(List.of(dto));
+        test.setResponses(new ArrayList<SubmitQuestionRequestDto>(){
+            {
+                add(dto);
+            }
+        });
 
         String content = new ObjectMapper().writeValueAsString(test);
 
         SubmitQuestionResponseDto response = new SubmitQuestionResponseDto();
 
-        var obj = new SubmitQuestionResponse();
+        SubmitQuestionResponse obj = new SubmitQuestionResponse();
         obj.setQuestions(new ArrayList<SubmitQuestionResponseDto>(){
             {
                 add(response);

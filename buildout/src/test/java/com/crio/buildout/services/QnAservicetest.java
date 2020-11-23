@@ -113,7 +113,11 @@ public class QnAservicetest {
     @Test
     public void incompleteyAttemptedQuestionsStillGivesResponse() {
         SubmitQuestionRequest request = new SubmitQuestionRequest();
-        SubmitQuestionRequestDto dto1 = new SubmitQuestionRequestDto("001", List.of("1"));
+        SubmitQuestionRequestDto dto1 = new SubmitQuestionRequestDto("001", new ArrayList<String>(){
+            {
+                add("1");
+            }
+        });
         
         request.setResponses(new ArrayList<SubmitQuestionRequestDto>(){
             {
