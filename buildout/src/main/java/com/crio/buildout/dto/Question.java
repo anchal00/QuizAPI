@@ -1,13 +1,7 @@
 package com.crio.buildout.dto;
 
-import java.util.Map;
-
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import org.springframework.data.mongodb.core.mapping.Field;
-
+import java.util.Map;
 import lombok.Data;
 
 @Data

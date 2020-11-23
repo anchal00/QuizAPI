@@ -1,11 +1,10 @@
 package com.crio.buildout.exchanges;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.crio.buildout.dto.Question;
 import com.crio.buildout.dto.SubmitQuestionResponseDto;
 import com.crio.buildout.dto.Summary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

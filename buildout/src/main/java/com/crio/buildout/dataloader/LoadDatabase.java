@@ -1,12 +1,12 @@
 package com.crio.buildout.dataloader;
 
-import java.io.File;
-import java.util.List;
-
 import com.crio.buildout.models.QuestionEntity;
 import com.crio.buildout.repositoryservice.QnARepositoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

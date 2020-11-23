@@ -1,13 +1,5 @@
 package com.crio.buildout.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.crio.buildout.dto.Question;
 import com.crio.buildout.dto.SubmitQuestionRequestDto;
 import com.crio.buildout.dto.SubmitQuestionResponseDto;
@@ -17,7 +9,13 @@ import com.crio.buildout.exchanges.SubmitQuestionRequest;
 import com.crio.buildout.exchanges.SubmitQuestionResponse;
 import com.crio.buildout.models.QuestionEntity;
 import com.crio.buildout.repositoryservice.QnARepositoryService;
-import com.google.common.collect.Multiset.Entry;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
