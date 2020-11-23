@@ -8,8 +8,8 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Question {
 
-    private String questionId;
-    private String title;
-    private String type;
-    private Map<String, String> options;
+  private String questionId;
+  private String title;
+  private String type;
+  private Map<String, String> options;
 }

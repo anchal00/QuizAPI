@@ -6,8 +6,8 @@ import com.crio.buildout.exchanges.SubmitQuestionResponse;
 
 public interface QnAservice {
     
-    GetQuestionResponse getQuestionSet(String moduleId);
+  GetQuestionResponse getQuestionSet(String moduleId);
 
-    SubmitQuestionResponse checkSubmittedAnswers(SubmitQuestionRequest data, String module);
+  SubmitQuestionResponse checkSubmittedAnswers(SubmitQuestionRequest data, String module);
 
 }

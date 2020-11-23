@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QnArepository extends MongoRepository<QuestionEntity, String> {
     
-    public List<QuestionEntity> findAllByModuleId(String moduleId);
+  public List<QuestionEntity> findAllByModuleId(String moduleId);
     
 }

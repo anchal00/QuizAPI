@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubmitQuestionResponse {
-    private List<SubmitQuestionResponseDto> questions = new ArrayList<>();
-    private Summary summary;
+  private List<SubmitQuestionResponseDto> questions = new ArrayList<>();
+  private Summary summary;
 }
