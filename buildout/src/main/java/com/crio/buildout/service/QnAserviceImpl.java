@@ -29,7 +29,7 @@ public class QnAserviceImpl implements QnAservice {
   @Override
   public GetQuestionResponse getQuestionSet(String moduleId) {
 
-    if (moduleId.isEmpty()) {
+    if (moduleId.isEmpty() || moduleId.trim() == " ") {
       return null;
     }
     List<Question> list = qnaRepository.getQuestions(moduleId);
