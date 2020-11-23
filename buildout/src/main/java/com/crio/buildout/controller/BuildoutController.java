@@ -38,7 +38,7 @@ public class BuildoutController {
     public ResponseEntity<GetQuestionResponse> getQuestions(@PathVariable String moduleId, HttpServletRequest request) {
 
         GetQuestionResponse obj = qnAservice.getQuestionSet(moduleId);
-        if (obj.getQuestionList().size() == 0) {
+        if (obj.getQuestions().size() == 0) {
             return new ResponseEntity<GetQuestionResponse>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<GetQuestionResponse>(obj, HttpStatus.OK);

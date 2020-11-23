@@ -106,7 +106,7 @@ public class QnAservicetest {
         verify(qnARepositoryService).getQuestions("1");
 
         assertNotNull(responseObject);
-        assertTrue(responseObject.getQuestionList().size() > 0);
+        assertTrue(responseObject.getQuestions().size() > 0);
     
     }
 

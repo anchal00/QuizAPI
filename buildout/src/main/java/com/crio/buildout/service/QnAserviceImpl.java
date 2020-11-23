@@ -36,7 +36,7 @@ public class QnAserviceImpl implements QnAservice {
         List<Question> list = qnaRepository.getQuestions(moduleId);
 
         GetQuestionResponse responseObject = new GetQuestionResponse();
-        responseObject.setQuestionList(list);
+        responseObject.setQuestions(list);
         return responseObject;
     }
 

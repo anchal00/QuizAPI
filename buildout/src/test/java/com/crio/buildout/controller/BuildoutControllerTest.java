@@ -87,7 +87,7 @@ public class BuildoutControllerTest {
         List<Question> list = mapper.readValue(file, new TypeReference<List<Question>>(){});
 
         var response = new GetQuestionResponse();
-        response.setQuestionList(list);
+        response.setQuestions(list);
         return response;
     }
 
