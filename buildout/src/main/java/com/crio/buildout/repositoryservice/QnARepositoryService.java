@@ -3,9 +3,6 @@ package com.crio.buildout.repositoryservice;
 import com.crio.buildout.dto.Question;
 import com.crio.buildout.models.QuestionEntity;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
