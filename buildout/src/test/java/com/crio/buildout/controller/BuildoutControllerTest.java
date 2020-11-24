@@ -3,6 +3,7 @@ package com.crio.buildout.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,8 +15,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,18 +31,23 @@ import com.crio.buildout.dto.SubmitQuestionResponseDto;
 import com.crio.buildout.exchanges.GetQuestionResponse;
 import com.crio.buildout.exchanges.SubmitQuestionRequest;
 import com.crio.buildout.exchanges.SubmitQuestionResponse;
+import com.crio.buildout.models.QuestionEntity;
+import com.crio.buildout.repositoryservice.QnARepositoryService;
 import com.crio.buildout.service.QnAservice;
+import com.crio.buildout.service.QnAserviceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.assertj.core.util.Arrays;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -54,58 +64,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @SpringBootTest(classes = {BuildoutApplication.class}) 
 @AutoConfigureMockMvc
-@ExtendWith(MockitoExtension.class)
 public class BuildoutControllerTest {
     
     @InjectMocks
     private BuildoutController buildoutController;
 
-    @Mock
+    @MockBean
     private QnAservice qnAservice;
-
+    private  ObjectMapper mapper;
     private static final String QnA_API_ENDPOINT = "/quiz";
-
-    private ObjectMapper mapper;
 
     private MockMvc mvc;
 
-    private static SubmitQuestionRequestDto response1;
-    private static SubmitQuestionRequestDto response2;
-    private static SubmitQuestionRequestDto response3;
-    private static SubmitQuestionRequestDto response4;
-    
-    void loadResponses() {
-        ArrayList<String> list1 = new ArrayList<String>(){
-            {
-                add("4");
-            }
-        };
-        ArrayList<String> list2 = new ArrayList<String>(){
-            {
-                add("1");
-                add("3");
-                add("4");
-            }
-        };
-        ArrayList<String> list3 = new ArrayList<String>(){
-            {
-                add("throwable");
-            }
-        };
-        ArrayList<String> list4 = new ArrayList<String>(){
-            {
-                add("throw");
-            }
-        };
-        response1 = new SubmitQuestionRequestDto("001", list1);
-        response2 = new SubmitQuestionRequestDto("002", list2);
-        response3 = new SubmitQuestionRequestDto("003", list3);
-        response4 = new SubmitQuestionRequestDto("003", list4);
-    }      
-
     public GetQuestionResponse loadQuestions() throws Exception {
         File file = new File(System.getProperty("user.dir") + "/../initial_data_load.json");
-
+        if (!file.exists()) {
+            return null;
+        }
+       
         List<Question> list = mapper.readValue(file, new TypeReference<List<Question>>(){});
 
         GetQuestionResponse response = new GetQuestionResponse();
@@ -113,17 +89,16 @@ public class BuildoutControllerTest {
         return response;
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
-        mapper = new ObjectMapper();
-
         MockitoAnnotations.initMocks(this);
-
+        mapper = new ObjectMapper();
         mvc = MockMvcBuilders.standaloneSetup(buildoutController).build();
+
     }
     @Test
     public void sendValidGetQuestionsRequestGetAllQuestions() throws Exception {
-
+        
       GetQuestionResponse responseObject = loadQuestions();
       assertNotNull(responseObject);
       when(qnAservice.getQuestionSet("1")).thenReturn(responseObject);
@@ -160,7 +135,7 @@ public class BuildoutControllerTest {
 
         GetQuestionResponse responseObject = loadQuestions();
         assertNotNull(responseObject);
-        when(qnAservice.getQuestionSet("1")).thenReturn(responseObject);
+        when(qnAservice.getQuestionSet(any(String.class))).thenReturn(responseObject);
 
         URI uri = UriComponentsBuilder
             .fromPath("/quiiz" + "/" + 1)
@@ -190,27 +165,23 @@ public class BuildoutControllerTest {
         SubmitQuestionRequestDto dto = new SubmitQuestionRequestDto();
 
         dto.setQuestionId("test");
-        dto.setUserResponse(new ArrayList<String>(){
-            {
-                add("dummyAnswer");
-            }
-        });
-        test.setResponses(new ArrayList<SubmitQuestionRequestDto>(){
-            {
-                add(dto);
-            }
-        });
+        List<String> list1 = new ArrayList<String>();
+        list1.add("dummyAnswer");
+        dto.setUserResponse(list1);
+
+        List<SubmitQuestionRequestDto> list2 = new ArrayList<SubmitQuestionRequestDto>();
+        list2.add(dto);
+        test.setResponses(list2);
 
         String content = new ObjectMapper().writeValueAsString(test);
 
         SubmitQuestionResponseDto response = new SubmitQuestionResponseDto();
 
         SubmitQuestionResponse obj = new SubmitQuestionResponse();
-        obj.setQuestions(new ArrayList<SubmitQuestionResponseDto>(){
-            {
-                add(response);
-            }
-        });
+        List<SubmitQuestionResponseDto> list3 = new ArrayList<SubmitQuestionResponseDto>();
+        list3.add(response);
+
+        obj.setQuestions(list3);
 
         when(qnAservice.checkSubmittedAnswers(test, "1"))
             .thenReturn(obj);

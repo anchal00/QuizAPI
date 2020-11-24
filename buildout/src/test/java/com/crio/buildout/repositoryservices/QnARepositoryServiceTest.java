@@ -25,10 +25,9 @@ import com.crio.buildout.repositoryservice.QnARepositoryServiceimpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -45,30 +44,32 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest(classes = {BuildoutApplication.class})
-@RunWith(SpringRunner.class) 
+@ExtendWith(MockitoExtension.class)
+@DirtiesContext
 public class QnARepositoryServiceTest {
     
-    @TestConfiguration
-    static class QnARepositoryServiceTestContextConfiguration {
-	 
-        @Bean
-        public QnARepositoryService employeeService() {
-            return new QnARepositoryServiceimpl();
-        }
-    }
+    @InjectMocks
+    private QnARepositoryServiceimpl qnARepositoryService;
 
     @Autowired
-    QnARepositoryService qnARepositoryService;
+    private ObjectMapper objectMapper;
     
-    @MockBean
-    QnArepository qnArepository;
+    @Mock
+    private QnArepository qnArepository;
 
-    @BeforeEach
-    public void setup() {
-        List<QuestionEntity> list = getQuestionsEntities();
-        when(qnArepository.findAllByModuleId("1")).thenReturn(list);
-    }
-
+    // @BeforeEach
+    // public void setup() {
+    //     List<QuestionEntity> list = getQuestionsEntities();
+    //     for (QuestionEntity entity : list ) {
+    //         mongoTemplate.save(entity, "test");
+    //     }
+    //     when(qnArepository.findAllByModuleId("1")).thenReturn(list);
+    // }
+    
+    // @AfterEach
+    // void teardown() {
+    //     mongoTemplate.dropCollection("test");
+    // }
     public List<QuestionEntity> getQuestionsEntities() {
         QuestionEntity question1 = new QuestionEntity("1", "001", "What is the parent class/interface of Exception class?",
             "java Question", "Subjective", null, Arrays.asList("throwable"), null);
@@ -90,9 +91,11 @@ public class QnARepositoryServiceTest {
     @Test
     public void correctModuleIdGetsListofQuestions() {
 
-        List<QuestionEntity> listdummy = getQuestionsEntities();
-        when(qnArepository.findAllByModuleId("1")).thenReturn(listdummy);
+        assertNotNull(qnARepositoryService);
 
+        List<QuestionEntity> testList = getQuestionsEntities();
+        assertNotNull(testList);
+        when(qnArepository.findAllByModuleId("1")).thenReturn(testList);
         List<Question> list = qnARepositoryService.getQuestions("1");
 
         verify(qnArepository).findAllByModuleId("1");

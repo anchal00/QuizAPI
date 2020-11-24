@@ -2,16 +2,20 @@ package com.crio.buildout.repositoryservice;
 
 import com.crio.buildout.dto.Question;
 import com.crio.buildout.models.QuestionEntity;
+
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
 
 public interface QnARepositoryService {
     
-  List<Question> getQuestions(String moduleId);
+  public List<Question> getQuestions(String moduleId);
 
-  Map<String, QuestionEntity> getAllEntitiesMap(String moduleId);
+  public Map<String, QuestionEntity> getAllEntitiesMap(String moduleId);
 
-  void clearDb();
+  public void clearDb();
   
-  void populateDatabase(List<QuestionEntity> listToLoad);
+  public void populateDatabase(List<QuestionEntity> listToLoad);
 }

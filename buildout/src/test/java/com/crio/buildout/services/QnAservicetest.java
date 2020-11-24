@@ -45,7 +45,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 public class QnAservicetest {
     
     @InjectMocks 
-    private QnAservice qnAservice = new QnAserviceImpl();
+    private QnAserviceImpl qnAservice;
 
     @MockBean
     private QnARepositoryService qnARepositoryService;

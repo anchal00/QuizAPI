@@ -23,16 +23,12 @@ public class QnARepositoryServiceimpl implements QnARepositoryService {
   @Autowired
   QnArepository questionrepo;
 
-  private ModelMapper mapper;
-
   @Override
   public List<Question> getQuestions(String moduleId) {
     List<Question> questionList = new ArrayList<>();
-    if (moduleId.isEmpty()) {
-      return questionList;
-    }
+    
     List<QuestionEntity> qentityList = questionrepo.findAllByModuleId(moduleId);
-    mapper = new ModelMapper();
+    ModelMapper mapper = new ModelMapper();
     for (QuestionEntity entity : qentityList) {
       questionList.add(mapper.map(entity, Question.class));
     }
